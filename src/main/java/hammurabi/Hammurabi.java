@@ -12,9 +12,11 @@ public class Hammurabi {
     }
 
     void playGame() {
-        // grain
-        // population
-        // etc.
+        int population = 100;
+        int bushelsGrain = 2800;
+        int acresLand = 1000;
+        int landValueBushelsPerAcre = 19;
+        int year = 0;
         // "statements go after declarations" --- may the ones that reference other methods?
     }
 
