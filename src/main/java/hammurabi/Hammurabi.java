@@ -1,24 +1,28 @@
 package hammurabi;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util.println;
-
 public class Hammurabi {
-    Random random = new Random();
+    Random rand = new Random();
     Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        new Hammurabi().playGame(); // new Hammurabi object that calls the playGame method
+        new Hammurabi().playGame();
     }
 
-    // public static String getStringInput(String prompt) {
-        // Scanner scanner = new Scanner(System.in);
-        // println(prompt);
-        // String userInputString = scanner.nextLine();
-        // return userInputString;
-    // }
+    int getNumber(String message) {
+        while (true) {
+            System.out.print(message);
+            try {
+                return scanner.nextInt();
+            }
+            catch (InputMismatchException e) {
+                System.out.println("\"" + scanner.next() + "\" isn't a number!");
+            }
+        }
+    }
 
     void playGame() {
         int population = 100;
@@ -28,10 +32,9 @@ public class Hammurabi {
         int year = 0;
         int numberOfAcresToBuy = 0;
         int numberOfAcresToSell = 0;
-        // "statements go after declarations" --- maybe the ones that reference other methods?
 
         // numberOfAcresToBuy
-        numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain, acresLand);
+        numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
         acresLand += numberOfAcresToBuy;
         bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
 
@@ -46,44 +49,66 @@ public class Hammurabi {
         numberOfAcresToBuy = 0;
         numberOfAcresToSell = 0;
 
-        System.out.println(acresLand); // just for testing
-        System.out.println(bushelsGrain); // just for testing
     }
 
-    public int askHowManyAcresToBuy(int price, int bushelsGrain, int acresLand) {
-        System.out.println("How many acres would you like to buy?");
-        // Scanner scanner1 = new Scanner(System.in);
-        int numberOfAcresToBuy = Integer.parseInt(scanner.nextLine());
-        if(numberOfAcresToBuy >= 0 && price * numberOfAcresToBuy <= bushelsGrain) {
-            System.out.println("You bought " + numberOfAcresToBuy + " acres.");
-        } else if(numberOfAcresToBuy < 0 && price * numberOfAcresToBuy <= bushelsGrain) {
-            System.out.println("Invalid Entry: Negative Number");
-            askHowManyAcresToBuy(price, bushelsGrain, acresLand);
-        } else if (numberOfAcresToBuy >= 0 && price * numberOfAcresToBuy > bushelsGrain) {
-            System.out.println("Invalid Entry: Price Exceeds Bushels In Storage");
-            askHowManyAcresToBuy(price, bushelsGrain, acresLand);
+    public int askHowManyAcresToBuy(int price, int bushelsGrain) {
+        int trueFalse = 0;
+        int input = 0;
+        while (trueFalse == 0) {
+            input = getNumber("How many acres would you like to buy?");
+            if (input >= 0 && price * input <= bushelsGrain) {
+                trueFalse = 1;
+            } else if (input < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (price * input > bushelsGrain) {
+                System.out.println("Invalid Input: Price Exceeds Bushels In Storage");
+            }
         }
-        // scanner1.close();
-        return numberOfAcresToBuy;
+        return input;
     }
 
     public int askHowManyAcresToSell(int acresLand) {
-        System.out.println("How many acres would you like to sell?");
-        // Scanner scanner2 = new Scanner(System.in);
-        int numberOfAcresToSell = Integer.parseInt(scanner.nextLine());
-        if(numberOfAcresToSell >= 0 && numberOfAcresToSell <= acresLand) {
-            System.out.println("You sold " + numberOfAcresToSell + " acres.");
-        } else if(numberOfAcresToSell < 0) {
-            System.out.println("Invalid Entry: Negative Number");
-            askHowManyAcresToSell(acresLand);
-        } else if (numberOfAcresToSell > acresLand) {
-            System.out.println("Invalid Entry: Input Exceeds Acres Owned");
-            askHowManyAcresToSell(acresLand);
+        int trueFalse = 0;
+        int input = 0;
+        while (trueFalse == 0) {
+            input = getNumber("How many acres would you like to sell?");
+            if (input >= 0 && input <= acresLand) {
+                trueFalse = 1;
+            } else if (input < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (input > acresLand) {
+                System.out.println("Invalid Input: Acres To Sell Exceeds Acres Owned");
+            }
         }
-        // scanner2.close();
-        return numberOfAcresToSell;
+        return input;
     }
 
-    // other methods go here
-    // ask, update variables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
