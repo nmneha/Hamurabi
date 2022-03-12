@@ -1,32 +1,89 @@
 package hammurabi;               // package declaration
 
+
 import java.util.Random;         // imports go here
 import java.util.Scanner;
 
 public class Hammurabi {
-
     Random rand = new Random();
     Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-
         new Hammurabi().playGame();
     }
 
-    void playGame() {
 
+
+
+
+
+
+
+
+
+
+
+
+    void playGame() {
         int population = 100;
         int bushelsGrain = 2800;
         int acresLand = 1000;
         int landValueBushelsPerAcre = 19;
         int year = 0;
-        // "statements go after declarations" --- may the ones that reference other methods?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
 
-            //Alissa's Methods int Starv to Immmigrants done so far
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Alissa's Methods int Starv to Immmigrants done so far
     public int starvationDeaths(int population, int bushelsFedToPeople) {
 
         //if more ppl are over fed grain =0
