@@ -83,38 +83,43 @@ public class Hammurabi {
         return input;
     }
 
+    public int askHowMuchGrainToFeedPeople(int bushelsGrain) {
+        int trueFalse = 0;
+        int howMuchGrain = 0;
+        while (trueFalse == 0) {
+            howMuchGrain = getNumber("How many bushels of grain would you like to use to feed the people?");
+            if (howMuchGrain >= 0 && howMuchGrain <= bushelsGrain) {
+                trueFalse = 1;
+            } else if (howMuchGrain < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (howMuchGrain > bushelsGrain) {
+                System.out.println("Invalid Input: Input Exceeds Bushels In Storage");
+            }
+        }
+        return howMuchGrain;
+    }
 
+    // TODO update bushelsGrain variable based on this output ^^^
 
+    public int askHowManyAcresToPlant(int acresLand, int population, int bushelsGrain) {
+        int trueFalse = 0;
+        int howMuchGrain = 0;
+        while (trueFalse == 0) {
+            howMuchGrain = getNumber("How many bushels of grain would you like to use to feed the people?");
+            if (howMuchGrain >= 0 && howMuchGrain <= bushelsGrain) {
+                trueFalse = 1;
+            } else if (howMuchGrain < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (howMuchGrain > bushelsGrain) {
+                System.out.println("Invalid Input: Input Exceeds Bushels In Storage");
+            }
+        }
+        return howMuchGrain;
+    } // Ask the player how many acres to plant with grain, and returns that number.
+    // You must have enough acres, enough grain, and enough people to do the planting.
+    // Any grain left over goes into storage for next year.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // TODO update ?variables? based on this output ^^^
 
 
 
