@@ -181,6 +181,7 @@ public class Hammurabi {
 
 
 
+
         //Alissa's Methods int Starv to Immmigrants done so far
     public int starvationDeaths(int population, int bushelsFedToPeople) {
 
@@ -226,7 +227,3 @@ public class Hammurabi {
     }
 
 }
-
-
-
-
