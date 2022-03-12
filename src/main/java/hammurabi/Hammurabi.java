@@ -83,32 +83,4 @@ public class Hammurabi {
         return input;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
