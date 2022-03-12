@@ -17,8 +17,7 @@ public class Hammurabi {
             System.out.print(message);
             try {
                 return scanner.nextInt();
-            }
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("\"" + scanner.next() + "\" isn't a number!");
             }
         }
@@ -39,7 +38,7 @@ public class Hammurabi {
         bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
 
         // numberOfAcresToSell
-        if(numberOfAcresToBuy == 0) {
+        if (numberOfAcresToBuy == 0) {
             numberOfAcresToSell = askHowManyAcresToSell(acresLand);
             acresLand -= numberOfAcresToSell;
             bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
@@ -82,5 +81,4 @@ public class Hammurabi {
         }
         return input;
     }
-
 }
