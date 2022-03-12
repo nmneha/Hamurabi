@@ -1,5 +1,4 @@
 package hammurabi;
-import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -8,53 +7,14 @@ import java.util.Scanner;
 public class Hammurabi {
     Random rand = new Random();
     Scanner scanner = new Scanner(System.in);
-    int population = 100;
-    int bushelsGrain = 2800;
-    int acresLand = 1000;
-    int landValueBushelsPerAcre = 19;
 
-    public static void main(String[]  args) {
-
+    public static void main(String[] args) {
         new Hammurabi().playGame();
-
-    }
-
-    void playGame() {
-        int population = 100;
-        int bushelsGrain = 2800;
-        int grossBushels = 3000;
-        int acresLand = 1000;
-        int landValueBushelsPerAcre = 19;
-        int year = 0;
-        int starved = 0;
-        int immigrants = 5;
-        int price = 3;
-        int rats = 200;
-
-        while (year <= 10) {
-            System.out.println("O great Hammurabi!\n" +
-                    "You are in year " + year + " of your ten year rule.\n" +
-                    "In the previous year " + starved + " people starved to death.\n" +
-                    "In the previous year " + immigrants + " people entered the kingdom.\n" +
-                    "The population is now " + population + ".\n" +
-                    "We harvested " + grossBushels + " bushels at " + price + " bushels per acre.\n" +
-                    "Rats destroyed " + rats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
-                    "The city owns " + acresLand + " acres of land.\n" +
-                    "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.");
-            System.out.println("\n");
-            askHowManyAcresToBuy(price, bushelsGrain);
-
-
-            break;
-
-        }
-
-
     }
 
     int getNumber(String message) {
         while (true) {
-            System.out.println(message);
+            System.out.print(message);
             try {
                 return scanner.nextInt();
             }
@@ -64,32 +24,90 @@ public class Hammurabi {
         }
     }
 
-    public int askHowManyAcresToBuy(int price, int bushelsGrain) {
-//        System.out.println("How many acres would you like to buy?");
-//        getNumber("My dear King Hammurabi, how many acres would you like to buy?");
-//        int numberOfAcresToBuy = Integer.parseInt(scanner.nextLine());
-        int numberOfAcresToBuy = getNumber("How many acres would you like ot buy?");
+    void playGame() {
+        int population = 100;
+        int bushelsGrain = 2800;
+        int acresLand = 1000;
+        int landValueBushelsPerAcre = 19;
+        int year = 0;
+        int numberOfAcresToBuy = 0;
+        int numberOfAcresToSell = 0;
+
+        // numberOfAcresToBuy
+        numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
         acresLand += numberOfAcresToBuy;
-        if(numberOfAcresToBuy >= 0) {
+        bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
 
-        } else {
-            System.out.println("Invalid Entry: Negative Number");
-            askHowManyAcresToBuy(price, bushelsGrain);
+        // numberOfAcresToSell
+        if(numberOfAcresToBuy == 0) {
+            numberOfAcresToSell = askHowManyAcresToSell(acresLand);
+            acresLand -= numberOfAcresToSell;
+            bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
         }
-        int bushelsSpent = price * numberOfAcresToBuy;
-        if(bushelsSpent <= bushelsGrain) {
 
-        } else {
-            System.out.println("Invalid Entry: Price Exceeds Bushels In Storage");
-            askHowManyAcresToBuy(price, bushelsGrain);
-        }
-        bushelsGrain -= bushelsSpent;
-        System.out.println("You bought " + numberOfAcresToBuy + " acres.");
-        System.out.println("You have " + bushelsGrain + " bushels left.");
+        // reset temporary variables
+        numberOfAcresToBuy = 0;
+        numberOfAcresToSell = 0;
 
-//        scanner1.close();
-        return (bushelsGrain);
     }
+
+    public int askHowManyAcresToBuy(int price, int bushelsGrain) {
+        int trueFalse = 0;
+        int input = 0;
+        while (trueFalse == 0) {
+            input = getNumber("How many acres would you like to buy?");
+            if (input >= 0 && price * input <= bushelsGrain) {
+                trueFalse = 1;
+            } else if (input < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (price * input > bushelsGrain) {
+                System.out.println("Invalid Input: Price Exceeds Bushels In Storage");
+            }
+        }
+        return input;
+    }
+
+    public int askHowManyAcresToSell(int acresLand) {
+        int trueFalse = 0;
+        int input = 0;
+        while (trueFalse == 0) {
+            input = getNumber("How many acres would you like to sell?");
+            if (input >= 0 && input <= acresLand) {
+                trueFalse = 1;
+            } else if (input < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (input > acresLand) {
+                System.out.println("Invalid Input: Acres To Sell Exceeds Acres Owned");
+            }
+        }
+        return input;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
