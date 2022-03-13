@@ -2,9 +2,6 @@ package hammurabi;
 
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,20 +9,6 @@ import java.util.Scanner;
 public class Hammurabi {
     Random rand = new Random();
     Scanner scanner = new Scanner(System.in);
-    private int population;
-    private int bushelsGrain;
-    private int acresLand;
-    private int landValueBushelsPerAcre;
-    private int year;
-    private int peopleStarved;
-    private int numberOfAcresToSell;
-    private int numberOfAcresToBuy;
-    private int immigrants;
-    private int bushelsHarvested;
-    private int oldAcreValue;
-    private int bushelsEatenByRats;
-    private int bushelsRemaining;
-
 
     public static void main(String[] args) {
         new Hammurabi().playGame();
@@ -43,6 +26,25 @@ public class Hammurabi {
     }
 
     void playGame() {
+        int year = 0;
+        int population = 100;
+        int acresLand = 1000;
+        int bushelsGrain = 2800;
+        int landValueBushelsPerAcre = 19;
+
+        int numberOfAcresToBuy = 0;
+        int numberOfAcresToSell = 0;
+        int grainFedToPeople = 0;
+        int bushelsUsedAsSeed = 2;
+        int acresPlanted = 0;
+
+        int peopleStarved = 0;
+        int immigrants = 5;
+        int oldAcreValue = 3;
+        int eatenByRats = 200;
+        int bushelsHarvested = 3000;
+        int diedFromPlague = 0;
+
         System.out.println("O great Hammurabi!\n" +
                 "You are in year 1 of your ten year rule.\n" +
                 "In the previous year 0 people starved to death.\n" +
@@ -58,17 +60,29 @@ public class Hammurabi {
             numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
             acresLand += numberOfAcresToBuy;
             bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
-
             // numberOfAcresToSell
             if (numberOfAcresToBuy == 0) {
                 numberOfAcresToSell = askHowManyAcresToSell(acresLand);
                 acresLand -= numberOfAcresToSell;
                 bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
             }
+            //How much grain is fed
+            grainFedToPeople = askHowMuchGrainToFeedPeople(bushelsGrain);
+            bushelsGrain -= grainFedToPeople;
+            // Acres to Plant
+            acresPlanted = askHowManyAcresToPlant(acresLand, population, bushelsGrain);
+
+
+            if (grainFedToPeople >= (population*20)) {
+                peopleStarved = 0;
+            }
+
+
+
+
+
 
             // reset temporary variables
-            numberOfAcresToBuy = 0;
-            numberOfAcresToSell = 0;
 
             year++;
             System.out.println("O great Hammurabi!\n" +
@@ -85,30 +99,26 @@ public class Hammurabi {
 
     }
 
-    public void startValues() {
-        year = 1;
-        peopleStarved = 0;
-        immigrants = 5;
-        population = 100;
-        bushelsGrain = 3000;
-        oldAcreValue = 3;
-        bushelsEatenByRats = 200;
-        bushelsRemaining = 2800;
-        acresLand = 1000;
-        landValueBushelsPerAcre = 19;
-
-    }
+    // TODO add method call to main and toggle uprising if applicable
+// (This will cause you to be immediately thrown out of office, ending the game.)
+// // uprising
+// boolean uprisingQuestionMark = uprising(population, howManyPeopleStarved);
+// if (uprisingQuestionMark = true) { // syntax???
+// <<INITIATE END OF GAME>>
+//      System.out.println("YOU LOSE: More than 45% of your population has starved.");
+//      System.exit(0);
+// }
 
     public int askHowManyAcresToBuy(int price, int bushelsGrain) {
         int trueFalse = 0;
         int acresToBuy = 0;
         while (trueFalse == 0) {
             acresToBuy = getNumber("How many acres would you like to buy?");
-            if (acresToBuy >= 0 && landValueBushelsPerAcre * acresToBuy <= bushelsGrain) {
+            if (acresToBuy >= 0 && price * acresToBuy <= bushelsGrain) {
                 trueFalse = 1;
             } else if (acresToBuy < 0) {
                 System.out.println("Invalid Input: Negative Number");
-            } else if (landValueBushelsPerAcre * acresToBuy > bushelsGrain) {
+            } else if (price * acresToBuy > bushelsGrain) {
                 System.out.println("Invalid Input: Price Exceeds Bushels In Storage");
             }
         }
@@ -183,7 +193,19 @@ public class Hammurabi {
     // bushelsGrain -= 2 * howManyAcresToPlant;
     // <<howManyAcresToPlant is a temporary value but we actually probably don't need to explicitly reset these>>
 
-        //Alissa's Methods int Starv to Immmigrants done so far
+    public int plagueDeaths(int population) {
+        int numberOfPlagueDeaths = 0;
+        if (rand.nextInt(100) < 14) { // using 14 instead of 15 because nextInt includes 0 but not 100
+            numberOfPlagueDeaths = population / 2;
+        }
+        return numberOfPlagueDeaths;
+    }
+
+// TODO update population variable based on this output ^^^, add call to this method to main
+// // plagueDeaths
+// int plagueDeaths = plagueDeaths(population);
+// population -= plagueDeaths;
+
     public int starvationDeaths(int population, int bushelsFedToPeople) {
 
         //if more ppl are over fed grain =0
@@ -198,12 +220,8 @@ public class Hammurabi {
     }
 
     public boolean uprising(int population, int howManyPeopleStarved) {
-        //return true if 45% of ppl starve
-        double percentage = (double) howManyPeopleStarved / population; //double div by int =double
-        boolean didMoreThan45PercDie = percentage < 0.45;
-
-
-        return didMoreThan45PercDie;
+       double percentage = (double) howManyPeopleStarved / population; //double div by int =double
+        return percentage > .45;
     }
 
     public int immigrants(int population, int acresOwned, int grainInStorage) {
@@ -213,33 +231,27 @@ public class Hammurabi {
         return immigtrantWave;
     }
 
-    public int harvest(int acres){ //int bushelsUsedAsSeed) {
+    public int harvest(int acres) {
         //get random int from 1-6
-        int randNumber = rand.nextInt(7);
+        int randNumber = rand.nextInt(6);
         randNumber +=1;                         //it takes 2 bushels of grain to farm an acre of land thats why bushelsUsedAsSeed /2
-        int acresPlanted =acres;                //place holder for acres; 1st acres is unknown
-        if(acres  > bushelsUsedAsSeed /2){      //u can have more land than seeds
-             acresPlanted=bushelsUsedAsSeed/2;  // this is the relaity of not being able to plant all acres
-        }
+//        int acresPlanted =acres;                //place holder for acres; 1st acres is unknown
+//        if(acres  > bushelsUsedAsSeed /2){      //u can have more land than seeds
+//             acresPlanted=bushelsUsedAsSeed/2;  // this is the relaity of not being able to plant all acres
+//        }
         //acres * rand# = Bushels of grain
-        int BushlsOfGrain = acresPlanted * randNumber;
-        return BushlsOfGrain;
+        int grainHarvested = acres * randNumber;
+        return grainHarvested;
     }
 
     public int grainEatenByRats(int bushels) {
         int grainsEaten=0;
+        if(rand.nextInt(100) > 60 ){
 
-        //Do we have a rat prob : Y/N
-        // If Y then fig out grain eaten
-         if(rand.nextInt(100) < 40 ){
-            int  grainMax = rand.nextInt()*20; //get random # from 0-20
-            grainMax += 10;                     // sets gran max to 30
-          int grainPercentage = grainMax /100;   //makes % of  grains eaten
-                                                //find out how much the rats eaten
-           grainsEaten = grainPercentage * bushels;
+            grainsEaten = (rand.nextInt(21) + 10) * bushels / 100;
         }
         return  grainsEaten;
-         }
+    }
 
     public int newCostOfLand() {
         //price of land is random
@@ -250,5 +262,5 @@ public class Hammurabi {
 
 
     }
-
 }
+
