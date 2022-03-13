@@ -12,9 +12,9 @@ public class Hammurabi {
         new Hammurabi().playGame();
     }
 
-    int getNumber(String message) {
+    public int getNumber(String message) {
         while (true) {
-            System.out.print(message);
+            System.out.println(message);
             try {
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
@@ -28,25 +28,49 @@ public class Hammurabi {
         int bushelsGrain = 2800;
         int acresLand = 1000;
         int landValueBushelsPerAcre = 19;
-        int year = 0;
+        int year = 1;
         int numberOfAcresToBuy = 0;
         int numberOfAcresToSell = 0;
 
-        // numberOfAcresToBuy
-        numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
-        acresLand += numberOfAcresToBuy;
-        bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
+        System.out.println("O great Hammurabi!\n" +
+                "You are in year 1 of your ten year rule.\n" +
+                "In the previous year 0 people starved to death.\n" +
+                "In the previous year 5 people entered the kingdom.\n" +
+                "The population is now 100.\n" +
+                "We harvested 3000 bushels at 3 bushels per acre.\n" +
+                "Rats destroyed 200 bushels, leaving 2800 bushels in storage.\n" +
+                "The city owns 1000 acres of land.\n" +
+                "Land is currently worth 19 bushels per acre.\n");
 
-        // numberOfAcresToSell
-        if (numberOfAcresToBuy == 0) {
-            numberOfAcresToSell = askHowManyAcresToSell(acresLand);
-            acresLand -= numberOfAcresToSell;
-            bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
+        while (year <= 10) {
+            // numberOfAcresToBuy
+            numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
+            acresLand += numberOfAcresToBuy;
+            bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
+
+            // numberOfAcresToSell
+            if (numberOfAcresToBuy == 0) {
+                numberOfAcresToSell = askHowManyAcresToSell(acresLand);
+                acresLand -= numberOfAcresToSell;
+                bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
+            }
+
+            // reset temporary variables
+            numberOfAcresToBuy = 0;
+            numberOfAcresToSell = 0;
+
+            year++;
+            System.out.println("O great Hammurabi!\n" +
+                    "You are in year " + (year + 1) + " of your ten year rule.\n" +
+                    "In the previous year " + starvationDeaths(population, bushelsGrain) + " people starved to death.\n" +
+                    "In the previous year " + immigrants(population, acresLand, bushelsGrain) + " people entered the kingdom.\n" +
+                    "The population is now " + population + ".\n" +
+                    "We harvested " + harvest(acresLand) + " bushels at " + landValueBushelsPerAcre + " bushels per acre.\n" +
+                    "Rats destroyed 200 bushels, leaving 2800 bushels in storage.\n" +
+                    "The city owns " + acresLand + " acres of land.\n" +
+                    "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
         }
 
-        // reset temporary variables
-        numberOfAcresToBuy = 0;
-        numberOfAcresToSell = 0;
 
     }
 
@@ -211,7 +235,7 @@ public class Hammurabi {
         return immigtrantWave;
     }
 
-    public int harvest(int acres, int bushelsUsedAsSeed) {
+    public int harvest(int acres){ //int bushelsUsedAsSeed) {
         //get random int from 1-6
 
         return 0; // place holder
