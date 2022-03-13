@@ -200,9 +200,14 @@ public class Hammurabi {
         return  grainsEaten;
          }
 
-
     public int newCostOfLand() {
-        return 0; // place holder
+        //price of land is random
+        //btwn 17 - 23 bushels per acre
+        int randomLandCost = rand.nextInt(23-17 +1)+17;     //used based calc from skeleton file
+        System.out.println(randomLandCost);                         // Prints new land cost for user because its needed for next round
+        return randomLandCost;                                      //returns in case the print isnt needed
+
+
     }
 
 }
