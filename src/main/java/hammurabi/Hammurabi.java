@@ -1,5 +1,10 @@
 package hammurabi;
 
+import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.InputStream;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
@@ -94,7 +99,7 @@ public class Hammurabi {
 
     }
 
-    public int askHowManyAcresToBuy(int landValueBushelsPerAcre, int bushelsGrain) {
+    public int askHowManyAcresToBuy(int price, int bushelsGrain) {
         int trueFalse = 0;
         int acresToBuy = 0;
         while (trueFalse == 0) {
@@ -126,104 +131,57 @@ public class Hammurabi {
         return acresToSell;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public int askHowMuchGrainToFeedPeople(int bushelsGrain) {
+        int trueFalse = 0;
+        int howMuchGrain = 0;
+        while (trueFalse == 0) {
+            howMuchGrain = getNumber("How many bushels of grain would you like to use to feed the people?");
+            if (howMuchGrain >= 0 && howMuchGrain <= bushelsGrain) {
+                trueFalse = 1;
+            } else if (howMuchGrain < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (howMuchGrain > bushelsGrain) {
+                System.out.println("Invalid Input: Input Exceeds Bushels In Storage");
+            }
+        }
+        return howMuchGrain;
+    }
+
+    // TODO update bushelsGrain variable based on this output ^^^, add call to this method to main
+    // howMuchGrainForFood
+    // int grainForFood = askHowMuchGrainToFeedPeople(bushelsGrain)
+    // bushelsGrain -= grainForFood;
+    // <<grainForFood is a temporary value but we actually probably don't need to explicitly reset these>>
+
+    public int askHowManyAcresToPlant(int acresLand, int population, int bushelsGrain) {
+        int trueFalse = 0;
+        int acresToPlant = 0;
+        while (trueFalse == 0) {
+            acresToPlant = getNumber("How many acres of grain would you like to plant?");
+            if (acresToPlant >= 0 && acresToPlant <= acresLand &&
+            bushelsGrain >= acresToPlant * 2 && acresToPlant <= population * 10) {
+                trueFalse = 1;
+            } else if (acresToPlant < 0) {
+                System.out.println("Invalid Input: Negative Number");
+            } else if (acresToPlant > acresLand) { // start,,, add 2+ more else lines
+                System.out.println("Invalid Input: Input Exceeds Acres Available");
+            } else if (acresToPlant * 2 > bushelsGrain) {
+                int out1 = acresToPlant * 2;
+                System.out.println("Invalid Input: Input requires " + out1 + "bushels. " + bushelsGrain + " available.");
+            } else if (acresToPlant > population * 10) {
+                int out2 = acresToPlant / 10;
+                System.out.println("Invalid Input: Input requires population size of " + out2 + ". " +
+                        "Current population: " + population);
+            }
+        }
+        return acresToPlant;
+    }
+
+    // TODO update bushelsGrain variable based on this output ^^^, add call to this method to main
+    // howManyAcresToPlant
+    // int howManyAcresToPlant = askHowManyAcresToPlant(acresLand, population, bushelsGrain);
+    // bushelsGrain -= 2 * howManyAcresToPlant;
+    // <<howManyAcresToPlant is a temporary value but we actually probably don't need to explicitly reset these>>
 
         //Alissa's Methods int Starv to Immmigrants done so far
     public int starvationDeaths(int population, int bushelsFedToPeople) {
