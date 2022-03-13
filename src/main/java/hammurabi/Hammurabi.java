@@ -26,26 +26,28 @@ public class Hammurabi {
     }
 
     void playGame() {
+        //Main variables
         int year = 0;
         int population = 100;
         int acresLand = 1000;
         int bushelsGrain = 2800;
-        int landValueBushelsPerAcre = 19;
-
+        int landValueBushelsPerAcre = newCostOfLand();
+        //Temp Variables
         int numberOfAcresToBuy = 0;
         int numberOfAcresToSell = 0;
         int grainFedToPeople = 0;
         int bushelsUsedAsSeed = 2;
         int acresPlanted = 0;
-
+        boolean uprising = false;
+        //Randoms
         int peopleStarved = 0;
-        int immigrants = 5;
-        int oldAcreValue = 3;
-        int eatenByRats = 200;
-        int bushelsHarvested = 3000;
+        int immigrants = 0;
+        int oldAcreValue = landValueBushelsPerAcre;
+        int eatenByRats = 0;
+        int bushelsHarvested = 0;
         int diedFromPlague = 0;
-
-        System.out.println("O great Hammurabi!\n" +
+        //Intro Summary
+        System.out.println("My king, Hammurabi, you have been awarded the thrown!\n" +
                 "You are in year 1 of your ten year rule.\n" +
                 "In the previous year 0 people starved to death.\n" +
                 "In the previous year 5 people entered the kingdom.\n" +
@@ -54,7 +56,7 @@ public class Hammurabi {
                 "Rats destroyed 200 bushels, leaving 2800 bushels in storage.\n" +
                 "The city owns 1000 acres of land.\n" +
                 "Land is currently worth 19 bushels per acre.\n");
-
+        //Loop Input of Game
         while (year <= 10) {
             // numberOfAcresToBuy
             numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
@@ -71,15 +73,20 @@ public class Hammurabi {
             bushelsGrain -= grainFedToPeople;
             // Acres to Plant
             acresPlanted = askHowManyAcresToPlant(acresLand, population, bushelsGrain);
-
-
-            if (grainFedToPeople >= (population*20)) {
-                peopleStarved = 0;
+            bushelsGrain -= (acresPlanted*bushelsUsedAsSeed);
+            //Deaths From Plague
+            diedFromPlague = plagueDeaths(population);
+            population -= diedFromPlague;
+            //Starvation Deaths
+            peopleStarved = starvationDeaths(population, grainFedToPeople);
+            population -= peopleStarved;
+            // uprising
+            uprising = uprising(population, peopleStarved);
+            if (uprising == true) {
+                System.out.println("Too many people starved. There has been an uprising and you have been dethroned");
+                System.out.println("GAME OVER");
+                break;
             }
-
-
-
-
 
 
             // reset temporary variables
@@ -153,6 +160,7 @@ public class Hammurabi {
             } else if (howMuchGrain > bushelsGrain) {
                 System.out.println("Invalid Input: Input Exceeds Bushels In Storage");
             }
+
         }
         return howMuchGrain;
     }
@@ -206,10 +214,10 @@ public class Hammurabi {
 // int plagueDeaths = plagueDeaths(population);
 // population -= plagueDeaths;
 
-    public int starvationDeaths(int population, int bushelsFedToPeople) {
+    public int starvationDeaths(int population, int grainFedToPeople) {
 
         //if more ppl are over fed grain =0
-        int fedPpl = bushelsFedToPeople / 20;     // Each person needs 20 grains of bushels to surv
+        int fedPpl = grainFedToPeople / 20;     // Each person needs 20 grains of bushels to surv
         int starvDeath = 0;
 
         if (fedPpl < population) {
