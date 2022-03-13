@@ -215,16 +215,40 @@ public class Hammurabi {
 
     public int harvest(int acres){ //int bushelsUsedAsSeed) {
         //get random int from 1-6
-
-        return 0; // place holder
+        int randNumber = rand.nextInt(7);
+        randNumber +=1;                         //it takes 2 bushels of grain to farm an acre of land thats why bushelsUsedAsSeed /2
+        int acresPlanted =acres;                //place holder for acres; 1st acres is unknown
+        if(acres  > bushelsUsedAsSeed /2){      //u can have more land than seeds
+             acresPlanted=bushelsUsedAsSeed/2;  // this is the relaity of not being able to plant all acres
+        }
+        //acres * rand# = Bushels of grain
+        int BushlsOfGrain = acresPlanted * randNumber;
+        return BushlsOfGrain;
     }
 
     public int grainEatenByRats(int bushels) {
-        return 0; // place holder
-    }
+        int grainsEaten=0;
+
+        //Do we have a rat prob : Y/N
+        // If Y then fig out grain eaten
+         if(rand.nextInt(100) < 40 ){
+            int  grainMax = rand.nextInt()*20; //get random # from 0-20
+            grainMax += 10;                     // sets gran max to 30
+          int grainPercentage = grainMax /100;   //makes % of  grains eaten
+                                                //find out how much the rats eaten
+           grainsEaten = grainPercentage * bushels;
+        }
+        return  grainsEaten;
+         }
 
     public int newCostOfLand() {
-        return 0; // place holder
+        //price of land is random
+        //btwn 17 - 23 bushels per acre
+        int randomLandCost = rand.nextInt(23-17 +1)+17;     //used based calc from skeleton file
+        System.out.println(randomLandCost);                         // Prints new land cost for user because its needed for next round
+        return randomLandCost;                                      //returns in case the print isnt needed
+
+
     }
 
 }
