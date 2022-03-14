@@ -230,13 +230,13 @@ public class Hammurabi {
         int trueFalse = 0;
         int acresToBuy = 0;
         while (trueFalse == 0) {
-            acresToBuy = getNumber("How many acres would you like to buy?");
+            acresToBuy = getNumber("Majesty, how many acres would you like to buy?");
             if (acresToBuy >= 0 && price * acresToBuy <= bushelsGrain) {
                 trueFalse = 1;
             } else if (acresToBuy < 0) {
-                System.out.println("Invalid Input: Negative Number");
+                System.out.println("My king! You must have lost your marbles. Such a number does not exist!");
             } else if (price * acresToBuy > bushelsGrain) {
-                System.out.println("Invalid Input: Price Exceeds Bushels In Storage");
+                System.out.println("I know my Liege desires to expand the city, but you must stay within budget.");
             }
         }
         return acresToBuy;
@@ -246,13 +246,13 @@ public class Hammurabi {
         int trueFalse = 0;
         int acresToSell = 0;
         while (trueFalse == 0) {
-            acresToSell = getNumber("How many acres would you like to sell?");
+            acresToSell = getNumber("You do not want to buy? Then tell me, Majesty, how many should we sell?");
             if (acresToSell >= 0 && acresToSell <= acresLand) {
                 trueFalse = 1;
             } else if (acresToSell < 0) {
-                System.out.println("Invalid Input: Negative Number");
+                System.out.println("My king! You must have lost your marbles. Such a number does not exist!");
             } else if (acresToSell > acresLand) {
-                System.out.println("Invalid Input: Acres To Sell Exceeds Acres Owned");
+                System.out.println("What are you saying, my Liege? Do you want our people to starve?!");
             }
         }
         return acresToSell;
@@ -262,13 +262,13 @@ public class Hammurabi {
         int trueFalse = 0;
         int howMuchGrain = 0;
         while (trueFalse == 0) {
-            howMuchGrain = getNumber("How many bushels of grain would you like to use to feed the people?");
+            howMuchGrain = getNumber("Your people need food. How much can you spare us, our great King?");
             if (howMuchGrain >= 0 && howMuchGrain <= bushelsGrain) {
                 trueFalse = 1;
             } else if (howMuchGrain < 0) {
-                System.out.println("Invalid Input: Negative Number");
+                System.out.println("My king! You must have lost your marbles. Such a number does not exist!");
             } else if (howMuchGrain > bushelsGrain) {
-                System.out.println("Invalid Input: Input Exceeds Bushels In Storage");
+                System.out.println("How generous! Alas, our city is not yet bountiful. You must stay within the limits.");
             }
 
         }
@@ -285,21 +285,21 @@ public class Hammurabi {
         int trueFalse = 0;
         int acresToPlant = 0;
         while (trueFalse == 0) {
-            acresToPlant = getNumber("How many acres of grain would you like to plant?");
+            acresToPlant = getNumber("My dear Majesty, acres of grain would you like to plant?");
             if (acresToPlant >= 0 && acresToPlant <= acresLand &&
             bushelsGrain >= acresToPlant * 2 && acresToPlant <= population * 10) {
                 trueFalse = 1;
             } else if (acresToPlant < 0) {
-                System.out.println("Invalid Input: Negative Number");
+                System.out.println("My king! You must have lost your marbles. Such a number does not exist!");
             } else if (acresToPlant > acresLand) { // start,,, add 2+ more else lines
-                System.out.println("Invalid Input: Input Exceeds Acres Available");
+                System.out.println("My king, we cannot plant on land that is not yet ours.");
             } else if (acresToPlant * 2 > bushelsGrain) {
                 int out1 = acresToPlant * 2;
-                System.out.println("Invalid Input: Input requires " + out1 + "bushels. " + bushelsGrain + " available.");
+                System.out.println("My king! We would need " + out1 + "bushels. There are only " + bushelsGrain + " available. Our people would starve.");
             } else if (acresToPlant > population * 10) {
                 int out2 = acresToPlant / 10;
-                System.out.println("Invalid Input: Input requires population size of " + out2 + ". " +
-                        "Current population: " + population);
+                System.out.println("If only we had " + out2 + " people to fulfill such duties! " +
+                        "But alas, our population is only " + population + ".");
             }
         }
         return acresToPlant;
