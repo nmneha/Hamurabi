@@ -72,7 +72,7 @@ public class Hammurabi {
             bushelsGrain -= grainFedToPeople;
             // Acres to Plant
             acresPlanted = askHowManyAcresToPlant(acresLand, population, bushelsGrain);
-            bushelsGrain -= (acresPlanted*bushelsUsedAsSeed);
+            bushelsGrain -= (acresPlanted * bushelsUsedAsSeed);
             //Deaths From Plague
             diedFromPlague = plagueDeaths(population);
             population -= diedFromPlague;
@@ -121,18 +121,42 @@ public class Hammurabi {
         }
 
         if (uprising(population, peopleStarved)) {
-            System.out.println("O great Hammurabi!\n" +
-                    "You are in year " + year + " of your ten year rule.\n" +
-                    "In the previous year " + peopleStarved + " people starved to death.\n" +
-                    "In the previous year " + immigrants + " people entered the kingdom.\n" +
-                    "The population is now " + population + ".\n" +
-                    "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
-                    "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
-                    "The city owns " + acresLand + " acres of land.\n" +
-                    "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+            if (year < 4) {
+                System.out.println("O great Hammurabi!\n" +
+                        "You are in year " + year + " of your ten year rule.\n" +
+                        "In the previous year " + peopleStarved + " people starved to death.\n" +
+                        "In the previous year " + immigrants + " people entered the kingdom.\n" +
+                        "The population is now " + population + ".\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
+                        "The city owns " + acresLand + " acres of land.\n" +
+                        "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+            } else if (year >= 4 && year < 7) {
+                System.out.println("O great Hammurabi!\n" +
+                        "You are in year " + year + " of your ten year rule.\n" +
+                        "In the previous year " + peopleStarved + " people starved to death.\n" +
+                        "In the previous year " + immigrants + " people entered the kingdom.\n" +
+                        "The population is now " + population + ".\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
+                        "The city owns " + acresLand + " acres of land.\n" +
+                        "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
 
+            } else {
+                System.out.println("O great Hammurabi!\n" +
+                        "You are in year " + year + " of your ten year rule.\n" +
+                        "In the previous year " + peopleStarved + " people starved to death.\n" +
+                        "In the previous year " + immigrants + " people entered the kingdom.\n" +
+                        "The population is now " + population + ".\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
+                        "The city owns " + acresLand + " acres of land.\n" +
+                        "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+
+            }
         }
 
+        finalSummary(year, bushelsGrain, population, peopleStarved, immigrants, bushelsHarvested, oldAcreValue, eatenByRats, acresLand, landValueBushelsPerAcre);
 
     }
 
@@ -145,6 +169,46 @@ public class Hammurabi {
 //      System.out.println("YOU LOSE: More than 45% of your population has starved.");
 //      System.exit(0);
 // }
+    public void finalSummary(int year, int bushelsGrain, int population, int peopleStarved,
+                             int immigrants, int bushelsHarvested, int oldAcreValue, int eatenByRats,
+                             int acresLand, int landValueBushelsPerAcre) {
+        if (year == 10) {
+            if (bushelsGrain > (population * 20)) {
+                System.out.println("My great king, Hammurabi!\n" +
+                        "You have reached the end of your ten year rule.\n" +
+                        "In the previous year " + peopleStarved + " only people starved to death.\n" +
+                        "In the previous year " + immigrants + " people entered the kingdom.\n" +
+                        "The population has now reached " + population + ".\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "Rats destroyed " + eatenByRats + " bushels, leaving a bountiful supply of " + bushelsGrain + " bushels in storage.\n" +
+                        "The city owns " + acresLand + " acres of land.\n" +
+                        "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+            } else if (bushelsGrain == (population * 20)) {
+                System.out.println("Hammurabi, your stretch is thin!\n" +
+                        "You have reached the end of your ten year rule!\n" +
+                        "But in the previous year " + peopleStarved + " people starved to death!\n" +
+                        "In the previous year " + immigrants + " people entered the kingdom.\n" +
+                        "The population is now " + population + ".\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
+                        "The city owns " + acresLand + " acres of land.\n" +
+                        "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+
+            } else if (bushelsGrain < (population * 20)) {
+                System.out.println("O great Hammurabi!\n" +
+                        "You are in year " + year + " of your ten year rule.\n" +
+                        "In the previous year " + peopleStarved + " people starved to death.\n" +
+                        "In the previous year " + immigrants + " people entered the kingdom.\n" +
+                        "The population is now " + population + ".\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
+                        "The city owns " + acresLand + " acres of land.\n" +
+                        "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+
+            }
+        }
+    }
+
 
     public int askHowManyAcresToBuy(int price, int bushelsGrain) {
         int trueFalse = 0;
