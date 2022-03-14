@@ -31,14 +31,13 @@ public class Hammurabi {
         int population = 100;
         int acresLand = 1000;
         int bushelsGrain = 2800;
-        int landValueBushelsPerAcre = newCostOfLand();
+        int landValueBushelsPerAcre = 19;
         //Temp Variables
         int numberOfAcresToBuy = 0;
         int numberOfAcresToSell = 0;
         int grainFedToPeople = 0;
         int bushelsUsedAsSeed = 2;
         int acresPlanted = 0;
-        boolean uprising = false;
         //Randoms
         int peopleStarved = 0;
         int immigrants = 0;
@@ -81,26 +80,57 @@ public class Hammurabi {
             peopleStarved = starvationDeaths(population, grainFedToPeople);
             population -= peopleStarved;
             // uprising
-            uprising = uprising(population, peopleStarved);
-            if (uprising == true) {
-                System.out.println("Too many people starved. There has been an uprising and you have been dethroned");
-                System.out.println("GAME OVER");
+            if (uprising(population, peopleStarved)) {
                 break;
             }
-
-
-            // reset temporary variables
+            //IMMIGRANT
+            if (peopleStarved == 0) {
+                immigrants = immigrants(population, acresLand, bushelsGrain);
+                population += immigrants;
+            }
+            //HARVEST
+            bushelsHarvested = harvest(acresPlanted);
+            bushelsGrain += bushelsHarvested;
+            //RAT INFESTATION
+            eatenByRats = grainEatenByRats(bushelsGrain);
+            bushelsGrain -= eatenByRats;
+            //Previous Year landValue
+            oldAcreValue = landValueBushelsPerAcre;
+            System.out.println(newCostOfLand());
+            landValueBushelsPerAcre = newCostOfLand();
 
             year++;
+
+
             System.out.println("O great Hammurabi!\n" +
-                    "You are in year " + (year + 1) + " of your ten year rule.\n" +
-                    "In the previous year " + starvationDeaths(population, bushelsGrain) + " people starved to death.\n" +
-                    "In the previous year " + immigrants(population, acresLand, bushelsGrain) + " people entered the kingdom.\n" +
+                    "You are in year " + year + " of your ten year rule.\n" +
+                    "In the previous year " + peopleStarved + " people starved to death.\n" +
+                    "In the previous year " + immigrants + " people entered the kingdom.\n" +
                     "The population is now " + population + ".\n" +
-                    "We harvested " + harvest(acresLand) + " bushels at " + landValueBushelsPerAcre + " bushels per acre.\n" +
-                    "Rats destroyed 200 bushels, leaving 2800 bushels in storage.\n" +
+                    "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                    "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                     "The city owns " + acresLand + " acres of land.\n" +
                     "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+
+
+            numberOfAcresToBuy = 0;
+            numberOfAcresToSell = 0;
+            grainFedToPeople = 0;
+            bushelsUsedAsSeed = 2;
+            acresPlanted = 0;
+        }
+
+        if (uprising(population, peopleStarved)) {
+            System.out.println("O great Hammurabi!\n" +
+                    "You are in year " + year + " of your ten year rule.\n" +
+                    "In the previous year " + peopleStarved + " people starved to death.\n" +
+                    "In the previous year " + immigrants + " people entered the kingdom.\n" +
+                    "The population is now " + population + ".\n" +
+                    "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                    "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
+                    "The city owns " + acresLand + " acres of land.\n" +
+                    "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+
         }
 
 
@@ -264,11 +294,8 @@ public class Hammurabi {
     public int newCostOfLand() {
         //price of land is random
         //btwn 17 - 23 bushels per acre
-        int randomLandCost = rand.nextInt(23-17 +1)+17;     //used based calc from skeleton file
-        System.out.println(randomLandCost);                         // Prints new land cost for user because its needed for next round
+        int randomLandCost = rand.nextInt(24-16 +1)+16;     //used based calc from skeleton file
         return randomLandCost;                                      //returns in case the print isnt needed
-
-
     }
 }
 
