@@ -5,9 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Random;
+
 public class HammurabiTest {
 
     Hammurabi ham;
+    Random rand = new Random();
 
     boolean about(double expected, double actual) {
         return actual > 0.90 * expected && actual < 1.10 * expected;
@@ -17,31 +20,31 @@ public class HammurabiTest {
     public void setUp() throws Exception {
         ham = new Hammurabi();
     }
-//
-//    @Test
-//    public final void testPlagueDeaths1() {
-//        int number_of_plagues = 0;
-//        for (int i = 0; i < 10000; i++) {
-//            int deaths = ham.plagueDeaths(100);
-//            if (deaths > 0) {
-//                number_of_plagues += 1;
-//            }
-//        }
-//        int percentPlagues = number_of_plagues / 100;
-//        assertTrue("Number of plagues is about " + percentPlagues + ", not about 15%.",
-//                about(1500, number_of_plagues));
-//    }
 
-//    @Test
-//    public final void testPlagueDeaths2() {
-//        int deaths = 0;
-//        for (int i = 0; i < 10000; i++) {
-//            deaths = ham.plagueDeaths(100);
-//            if (deaths > 0) break;
-//        }
-//        assertEquals("In a plague, " + deaths + "% of your people die, not 50%.",
-//                50, deaths);
-//    }
+    @Test
+    public final void testPlagueDeaths1() {
+        int number_of_plagues = 0;
+        for (int i = 0; i < 10000; i++) {
+            int deaths = ham.plagueDeaths(100);
+            if (deaths > 0) {
+                number_of_plagues += 1;
+            }
+        }
+        int percentPlagues = number_of_plagues / 100;
+        assertTrue("Number of plagues is about " + percentPlagues + ", not about 15%.",
+                about(1500, number_of_plagues));
+    }
+
+    @Test
+    public final void testPlagueDeaths2() {
+        int deaths = 0;
+        for (int i = 0; i < 10000; i++) {
+            deaths = ham.plagueDeaths(100);
+            if (deaths > 0) break;
+        }
+        assertEquals("In a plague, " + deaths + "% of your people die, not 50%.",
+                50, deaths);
+    }
 
     @Test
     public final void testStarvationDeaths() {
