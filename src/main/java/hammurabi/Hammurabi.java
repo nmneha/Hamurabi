@@ -57,26 +57,32 @@ public class Hammurabi {
                 "Land is currently worth 19 bushels per acre.\n");
         //Loop Input of Game
         while (year <= 10) {
+            System.out.println("You can buy up to " + (bushelsGrain/landValueBushelsPerAcre) + " acres of land.\n");
             // numberOfAcresToBuy
             numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
             acresLand += numberOfAcresToBuy;
             bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
+            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
             // numberOfAcresToSell
             if (numberOfAcresToBuy == 0) {
                 numberOfAcresToSell = askHowManyAcresToSell(acresLand);
                 acresLand -= numberOfAcresToSell;
                 bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
+                System.out.println("You have " + bushelsGrain + " remaining.\n");
             }
+            System.out.println("You now have " + bushelsGrain + " bushels.\n");
             //How much grain is fed
             grainFedToPeople = askHowMuchGrainToFeedPeople(bushelsGrain);
             bushelsGrain -= grainFedToPeople;
+            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
             // Acres to Plant
             acresPlanted = askHowManyAcresToPlant(acresLand, population, bushelsGrain);
             bushelsGrain -= (acresPlanted * bushelsUsedAsSeed);
+            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
             //Deaths From Plague
             diedFromPlague = plagueDeaths(population);
             population -= diedFromPlague;
-            if (diedFromPlague >= (population*(45/100))) {
+            if (diedFromPlague != 0) {
                 System.out.println("Hammurabi! Our city has been ravaged by a plague! Only " + population + " remain!");
             }
             //Starvation Deaths
@@ -90,6 +96,8 @@ public class Hammurabi {
             if (peopleStarved == 0) {
                 immigrants = immigrants(population, acresLand, bushelsGrain);
                 population += immigrants;
+            } else {
+                immigrants = 0;
             }
             //HARVEST
             bushelsHarvested = harvest(acresPlanted);
@@ -99,7 +107,6 @@ public class Hammurabi {
             bushelsGrain -= eatenByRats;
             //Previous Year landValue
             oldAcreValue = landValueBushelsPerAcre;
-            System.out.println(newCostOfLand());
             landValueBushelsPerAcre = newCostOfLand();
 
             year++;
@@ -134,10 +141,10 @@ public class Hammurabi {
                 "In the previous year " + peopleStarved + " people starved to death.\n" +
                 "In the previous year " + immigrants + " people entered the kingdom.\n" +
                 "The population is now " + population + ".\n" +
-                "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                "We harvested " + bushelsHarvested + " bushels at " + landValueBushelsPerAcre + " bushels per acre.\n" +
                 "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                 "The city owns " + acresLand + " acres of land.\n" +
-                "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
+                "Land is currently worth " + newCostOfLand() + " bushels per acre.\n");
 
     }
 
@@ -306,7 +313,7 @@ public class Hammurabi {
 
     public int plagueDeaths(int population) {
         int numberOfPlagueDeaths = 0;
-        if (rand.nextInt(100) < 14) { // using 14 instead of 15 because nextInt includes 0 but not 100
+        if (rand.nextInt(100) < 15) { // using 14 instead of 15 because nextInt includes 0 but not 100
             numberOfPlagueDeaths = population / 2;
         }
         return numberOfPlagueDeaths;
@@ -357,7 +364,7 @@ public class Hammurabi {
 
     public int grainEatenByRats(int bushels) {
         int grainsEaten=0;
-        if(rand.nextInt(100) > 60 ){
+        if(rand.nextInt(100) < 40 ){
 
             grainsEaten = (rand.nextInt(21) + 10) * bushels / 100;
         }
