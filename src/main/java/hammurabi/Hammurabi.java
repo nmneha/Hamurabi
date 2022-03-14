@@ -70,7 +70,7 @@ public class Hammurabi {
                 acresLand -= numberOfAcresToSell;
                 bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
             }
-            System.out.println("You now have " + bushelsGrain + " bushels.\n");
+            System.out.println("You now have " + bushelsGrain + " bushels and " + acresLand + " acres.");
             //How much grain is fed
             grainFedToPeople = askHowMuchGrainToFeedPeople(bushelsGrain);
             bushelsGrain -= grainFedToPeople;
@@ -111,15 +111,16 @@ public class Hammurabi {
 
             year++;
 
-            printSummary(year, bushelsGrain, population, peopleStarved, immigrants, bushelsHarvested, oldAcreValue, eatenByRats, acresLand, landValueBushelsPerAcre);
+            printSummary(year, bushelsGrain, population, peopleStarved, immigrants, bushelsHarvested,
+                    bushelsUsedAsSeed, eatenByRats, acresLand, landValueBushelsPerAcre);
 
             numberOfAcresToBuy = 0;
             numberOfAcresToSell = 0;
             grainFedToPeople = 0;
-            bushelsUsedAsSeed = 2;
             acresPlanted = 0;
         }
-        finalSummary(year, bushelsGrain, population, peopleStarved, immigrants, bushelsHarvested, oldAcreValue, eatenByRats, acresLand, landValueBushelsPerAcre);
+        finalSummary(year, bushelsGrain, population, peopleStarved, immigrants, bushelsHarvested, bushelsUsedAsSeed,
+                eatenByRats, acresLand, landValueBushelsPerAcre);
 
     }
 
@@ -285,7 +286,8 @@ public class Hammurabi {
         int trueFalse = 0;
         int acresToPlant = 0;
         while (trueFalse == 0) {
-            acresToPlant = getNumber("My dear Majesty, how many acres of grain would you like to plant?");
+            acresToPlant = getNumber("My dear Majesty, it takes 2 bushels to plant an acre.\n" +
+                    "How many acres of grain would you like to plant?");
             if (acresToPlant >= 0 && acresToPlant <= acresLand &&
             bushelsGrain >= acresToPlant * 2 && acresToPlant <= population * 10) {
                 trueFalse = 1;
