@@ -5,9 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Random;
+
 public class HammurabiTest {
 
     Hammurabi ham;
+    Random rand = new Random();
 
     boolean about(double expected, double actual) {
         return actual > 0.90 * expected && actual < 1.10 * expected;

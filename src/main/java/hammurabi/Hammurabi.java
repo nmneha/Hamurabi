@@ -31,20 +31,21 @@ public class Hammurabi {
         int population = 100;
         int acresLand = 1000;
         int bushelsGrain = 2800;
-        int landValueBushelsPerAcre = 19;
+        int landValueBushelsPerAcre = newCostOfLand();
         //Temp Variables
         int numberOfAcresToBuy = 0;
         int numberOfAcresToSell = 0;
         int grainFedToPeople = 0;
-        int bushelsUsedAsSeed = 2;
         int acresPlanted = 0;
+        int harvest = 0;
         //Randoms
         int peopleStarved = 0;
         int immigrants = 0;
-        int oldAcreValue = landValueBushelsPerAcre;
+        int oldAcreValue = 0;
         int eatenByRats = 0;
         int bushelsHarvested = 0;
         int diedFromPlague = 0;
+        int bushelsUsedAsSeed = (rand.nextInt(6) + 1);
         //Intro Summary
         System.out.println("My king, Hammurabi, you have been awarded the thrown!\n" +
                 "You are in year 1 of your ten year rule.\n" +
@@ -57,18 +58,17 @@ public class Hammurabi {
                 "Land is currently worth 19 bushels per acre.\n");
         //Loop Input of Game
         while (year <= 10) {
+            landValueBushelsPerAcre = 19;
             System.out.println("You can buy up to " + (bushelsGrain/landValueBushelsPerAcre) + " acres of land.\n");
             // numberOfAcresToBuy
             numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
             acresLand += numberOfAcresToBuy;
             bushelsGrain -= landValueBushelsPerAcre * numberOfAcresToBuy;
-            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
             // numberOfAcresToSell
             if (numberOfAcresToBuy == 0) {
                 numberOfAcresToSell = askHowManyAcresToSell(acresLand);
                 acresLand -= numberOfAcresToSell;
                 bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
-                System.out.println("You have " + bushelsGrain + " remaining.\n");
             }
             System.out.println("You now have " + bushelsGrain + " bushels.\n");
             //How much grain is fed
@@ -134,22 +134,22 @@ public class Hammurabi {
 // }
 
     public void printSummary(int year, int bushelsGrain, int population, int peopleStarved,
-                             int immigrants, int bushelsHarvested, int oldAcreValue, int eatenByRats,
+                             int immigrants, int bushelsHarvested, int bushelsUsedAsSeed, int eatenByRats,
                              int acresLand, int landValueBushelsPerAcre) {
         System.out.println("O great Hammurabi!\n" +
                 "You are in year " + year + " of your ten year rule.\n" +
                 "In the previous year " + peopleStarved + " people starved to death.\n" +
                 "In the previous year " + immigrants + " people entered the kingdom.\n" +
                 "The population is now " + population + ".\n" +
-                "We harvested " + bushelsHarvested + " bushels at " + landValueBushelsPerAcre + " bushels per acre.\n" +
+                "We harvested " + bushelsHarvested + " bushels at " + bushelsUsedAsSeed + " bushels per acre.\n" +
                 "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                 "The city owns " + acresLand + " acres of land.\n" +
-                "Land is currently worth " + newCostOfLand() + " bushels per acre.\n");
+                "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
 
     }
 
     public void finalSummary(int year, int bushelsGrain, int population, int peopleStarved,
-                             int immigrants, int bushelsHarvested, int oldAcreValue, int eatenByRats,
+                             int immigrants, int bushelsHarvested, int bushelsUsedAsSeed, int eatenByRats,
                              int acresLand, int landValueBushelsPerAcre) {
         if (uprising(population, peopleStarved)) {
             if (year < 4) {
@@ -159,7 +159,7 @@ public class Hammurabi {
                         "In the previous year more than 45% of people starved to death!\n" +
                         "In the previous year " + immigrants + " people entered the kingdom.\n" +
                         "The population is now " + population + ".\n" +
-                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + bushelsUsedAsSeed + " bushels per acre.\n" +
                         "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                         "The city owns " + acresLand + " acres of land.\n" +
                         "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
@@ -170,7 +170,7 @@ public class Hammurabi {
                         "In the previous year " + peopleStarved + " people starved to death.\n" +
                         "In the previous year " + immigrants + " people entered the kingdom.\n" +
                         "The population is now " + population + ".\n" +
-                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + bushelsUsedAsSeed + " bushels per acre.\n" +
                         "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                         "The city owns " + acresLand + " acres of land.\n" +
                         "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
@@ -182,7 +182,7 @@ public class Hammurabi {
                         "In the previous year " + peopleStarved + " people starved to death.\n" +
                         "In the previous year " + immigrants + " people entered the kingdom.\n" +
                         "The population is now " + population + ".\n" +
-                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + bushelsUsedAsSeed + " bushels per acre.\n" +
                         "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                         "The city owns " + acresLand + " acres of land.\n" +
                         "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
@@ -196,7 +196,7 @@ public class Hammurabi {
                         "In the previous year " + peopleStarved + " only people starved to death.\n" +
                         "In the previous year " + immigrants + " people entered the kingdom.\n" +
                         "The population has now reached " + population + ".\n" +
-                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + bushelsUsedAsSeed + " bushels per acre.\n" +
                         "Rats destroyed " + eatenByRats + " bushels, leaving a bountiful supply of " + bushelsGrain + " bushels in storage.\n" +
                         "The city owns " + acresLand + " acres of land.\n" +
                         "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
@@ -206,7 +206,7 @@ public class Hammurabi {
                         "But in the previous year " + peopleStarved + " people starved to death!\n" +
                         "In the previous year " + immigrants + " people entered the kingdom.\n" +
                         "The population is now " + population + ".\n" +
-                        "We harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "We harvested " + bushelsHarvested + " bushels at " + bushelsUsedAsSeed + " bushels per acre.\n" +
                         "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                         "The city owns " + acresLand + " acres of land.\n" +
                         "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
@@ -216,7 +216,7 @@ public class Hammurabi {
                         "You have made it to year ten of your rule, but all is lost.\n" +
                         "In the previous year " + peopleStarved + " people starved to death!\n" +
                         "The population is now at a measely " + population + ".\n" +
-                        "We barely harvested " + bushelsHarvested + " bushels at " + oldAcreValue + " bushels per acre.\n" +
+                        "We barely harvested " + bushelsHarvested + " bushels at " + bushelsUsedAsSeed + " bushels per acre.\n" +
                         "Rats destroyed " + eatenByRats + " bushels, leaving " + bushelsGrain + " bushels in storage.\n" +
                         "The city owns " + acresLand + " acres of land.\n" +
                         "Land is currently worth " + landValueBushelsPerAcre + " bushels per acre.\n");
@@ -262,7 +262,7 @@ public class Hammurabi {
         int trueFalse = 0;
         int howMuchGrain = 0;
         while (trueFalse == 0) {
-            howMuchGrain = getNumber("Your people need food. How much can you spare us, our great King?");
+            howMuchGrain = getNumber("Your people need 20 bushels each for food. How much can you spare us, our great King?");
             if (howMuchGrain >= 0 && howMuchGrain <= bushelsGrain) {
                 trueFalse = 1;
             } else if (howMuchGrain < 0) {
@@ -285,7 +285,7 @@ public class Hammurabi {
         int trueFalse = 0;
         int acresToPlant = 0;
         while (trueFalse == 0) {
-            acresToPlant = getNumber("My dear Majesty, acres of grain would you like to plant?");
+            acresToPlant = getNumber("My dear Majesty, how many acres of grain would you like to plant?");
             if (acresToPlant >= 0 && acresToPlant <= acresLand &&
             bushelsGrain >= acresToPlant * 2 && acresToPlant <= population * 10) {
                 trueFalse = 1;
@@ -348,6 +348,7 @@ public class Hammurabi {
 
         return immigtrantWave;
     }
+
 
     public int harvest(int acres) {
         //get random int from 1-6
