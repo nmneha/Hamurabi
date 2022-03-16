@@ -27,7 +27,7 @@ public class Hammurabi {
 
     void playGame() {
         //Main variables
-        int year = 0;
+        int year = 1;
         int population = 100;
         int acresLand = 1000;
         int bushelsGrain = 2800;
@@ -42,7 +42,6 @@ public class Hammurabi {
         //Randoms
         int peopleStarved = 0;
         int immigrants = 0;
-        int oldAcreValue = 0;
         int eatenByRats = 0;
         int bushelsHarvested = 0;
         int diedFromPlague = 0;
@@ -59,7 +58,7 @@ public class Hammurabi {
         //Loop Input of Game
         while (year <= 10) {
             landValueBushelsPerAcre = 19;
-//            System.out.println("You can buy up to " + (bushelsGrain/landValueBushelsPerAcre) + " acres of land.\n");
+            System.out.println("You can buy up to " + (bushelsGrain/landValueBushelsPerAcre) + " acres of land.\n");
             // numberOfAcresToBuy
             numberOfAcresToBuy = askHowManyAcresToBuy(landValueBushelsPerAcre, bushelsGrain);
             acresLand += numberOfAcresToBuy;
@@ -70,15 +69,15 @@ public class Hammurabi {
                 acresLand -= numberOfAcresToSell;
                 bushelsGrain += landValueBushelsPerAcre * numberOfAcresToSell;
             }
-//            System.out.println("You now have " + bushelsGrain + " bushels and " + acresLand + " acres.");
+            System.out.println("You now have " + bushelsGrain + " bushels and " + acresLand + " acres.");
             //How much grain is fed
             grainFedToPeople = askHowMuchGrainToFeedPeople(bushelsGrain);
             bushelsGrain -= grainFedToPeople;
-//            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
+            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
             // Acres to Plant
             acresPlanted = askHowManyAcresToPlant(acresLand, population, bushelsGrain);
             bushelsGrain -= (acresPlanted * 2);
-//            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
+            System.out.println("You have " + bushelsGrain + " bushels remaining.\n");
             //Deaths From Plague
             diedFromPlague = plagueDeaths(population);
             population -= diedFromPlague;
@@ -106,12 +105,11 @@ public class Hammurabi {
             eatenByRats = grainEatenByRats(bushelsGrain);
             bushelsGrain -= eatenByRats;
             //Previous Year landValue
-            oldAcreValue = landValueBushelsPerAcre;
             landValueBushelsPerAcre = newCostOfLand();
 
             bushelsPerAcre = bushelsHarvested/acresPlanted;
 
-            year++;
+            year += 1;
 
             printSummary(year, bushelsGrain, population, peopleStarved, immigrants, bushelsHarvested, bushelsPerAcre,
                     eatenByRats, acresLand, landValueBushelsPerAcre);
