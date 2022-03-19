@@ -46,7 +46,7 @@ public class Hammurabi {
         int bushelsHarvested = 0;
         int diedFromPlague = 0;
         //Intro Summary
-        System.out.println("My king, Hammurabi, you have been awarded the thrown!\n" +
+        System.out.println("My king, Hammurabi, you have been awarded the throne!\n" +
                 "You are in year 1 of your ten year rule.\n" +
                 "In the previous year 0 people starved to death.\n" +
                 "In the previous year 5 people entered the kingdom.\n" +
